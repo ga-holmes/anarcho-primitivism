@@ -7,7 +7,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = (env, argv) => {
     return ({
         stats: 'minimal', // Keep console output easy to read.
-        entry: './src/index.js', // Your program entry point
+        entry: './src/index.ts', // Your program entry point
 
         // Your build destination
         output: {
@@ -48,6 +48,25 @@ module.exports = (env, argv) => {
             })],
         },
 
+
+        // Explain webpack how to do Typescript
+        module: {
+            rules: [
+                {
+                    test: /\.ts(x)?$/,
+                    loader: 'ts-loader',
+                    exclude: /node_modules/
+                }
+            ]
+        },
+        resolve: {
+            extensions: [
+                '.tsx',
+                '.ts',
+                '.js'
+            ]
+        },
+
         plugins: [
             // Copy our static assets to the final build
             new CopyPlugin({
@@ -56,7 +75,7 @@ module.exports = (env, argv) => {
 
             // Make an index.html from the template
             new HtmlWebpackPlugin({
-                template: 'src/index.html',
+                template: 'src/index.ejs',
                 hash: true,
                 minify: false
             })

@@ -29,38 +29,7 @@
 	<noscript>Please enable JavaScript in your web browser to view this page.</noscript>
 	<div id="pixi-content"><canvas id="pixi-canvas" /></div>
 
-	<script type="text/javascript">
-		function init() {
-				window.onkeydown = checkKey;
-			}
 
-			// process keyboard events
-			// keypress triggers changes in variables which affect drawing
-			function checkKey(event) {
-				switch (event.keyCode) {
-					// w 
-					case 87:
-						ySpeed = -1;
-						console.log("test");
-						break;
-					// s 
-					case 83:
-						ySpeed = 1;
-						break;
-					// a 
-					case 65:
-						xSpeed = -1;
-						break;
-					// s 
-					case 68:
-						xSpeed = 1;
-						break;
-					
-				}  // end switch
-			}
-
-			window.onload = init;
-	</script>
 </body>
 
 </html>
