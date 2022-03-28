@@ -76,4 +76,13 @@ export  default class CellBasic {
     get_graphic() {
         return this.#graphic;
     }
+
+    set_color(color: number){
+        if(color != this.#skin_color){
+            this.#skin_color = color;
+            this.#graphic.beginFill(this.#skin_color);
+            this.#graphic.drawCircle(0,0,this.#size);
+        }
+            
+    }
 }
