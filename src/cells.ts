@@ -10,21 +10,27 @@ export  default class CellBasic {
 	
 	#position_x: number;
 	#position_y: number;
+
 	#speed: number;
 	#heading: number;
-    #skin_color: number;
+    #skin_color: any;
     #size: number
 
     stage_width: number;
     stage_height: number;
     #hitbox_range: number;
 
-	constructor(pos_x: number, pos_y: number, s: number, dir: number, color: number, radius: number, max_width: number, max_height: number) {
+	constructor(pos_x: number, pos_y: number, s: number, dir: number, color: any, radius: number, max_width: number, max_height: number) {
 		this.#position_x = pos_x;
 		this.#position_y = pos_y;
 		this.#speed = s;
 		this.#heading = dir;
-        this.#skin_color = color;
+        this.#skin_color = {
+            r: color.r,
+            g: color.g,
+            b: color.b
+        }
+
         this.#size = radius;
 
         this.stage_width = max_width;
@@ -32,7 +38,7 @@ export  default class CellBasic {
         this.#hitbox_range = 1;
 
         this.#graphic = new Graphics();
-        this.#graphic.beginFill(this.#skin_color);
+        this.#graphic.beginFill((this.#skin_color.r << 16) + (this.#skin_color.g << 8) + this.#skin_color.b);
         this.#graphic.drawCircle(0,0,this.#size);
 	}
 
@@ -77,10 +83,18 @@ export  default class CellBasic {
         return this.#graphic;
     }
 
-    set_color(color: number){
+    get_traits() {
+        return {
+            size: this.#size,
+            speed: this.#speed,
+            color: this.#skin_color
+        }
+    }
+
+    set_color(color: any){
         if(color != this.#skin_color){
             this.#skin_color = color;
-            this.#graphic.beginFill(this.#skin_color);
+            this.#graphic.beginFill((this.#skin_color.r * 256 * 256) + (this.#skin_color.g * 256) + this.#skin_color.b);
             this.#graphic.drawCircle(0,0,this.#size);
         }
             

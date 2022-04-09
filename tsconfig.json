@@ -10,7 +10,7 @@
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "noUnusedParameters": true,
-        "noUnusedLocals": true,
+        "noUnusedLocals": false,
         "noFallthroughCasesInSwitch": true,
         "noImplicitOverride": true,
         // Settings for linking source files
