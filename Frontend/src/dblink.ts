@@ -3,7 +3,7 @@ export  default class getData{
     constructor(){
         this.#fresh = false;
     }
-    async getRows(rows: number){
+    async getRows(){
         this.#fresh = false;
         async function request<TResponse>(
             url: string, 
@@ -22,10 +22,11 @@ export  default class getData{
             console.log(response[1])
             console.log(11111)
             
-            console.log(response[0].id_cell) */
+            console.log(response[0].id_cell) 
             for(let i = 0; i<rows; i++){
                 console.log()
             }
+            */
             return response;
         })
         //console.log("from link ",data[0])
@@ -33,5 +34,8 @@ export  default class getData{
     }
     isfresh(){
         return this.#fresh;
+    }
+    stop(){
+        this.#fresh = false;
     }
 }

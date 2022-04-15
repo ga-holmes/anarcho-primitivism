@@ -2,3 +2,6 @@
 .cache
 dist
 node_modules
+Backend/dist
+Backend/dist/index.js
+Backend/dist/index.js.map

@@ -18,7 +18,7 @@ const pool = mysql_1.default.createPool({
     insecureAuth: true
 });
 app.get('/', (_req, res) => {
-    pool.query('select * from anarcho_cell_colors', [], (error, results, _fields) => {
+    pool.query('select * from all_cells', [], (error, results, _fields) => {
         if (error) {
             res.status(500).send(error);
             return;

@@ -14,33 +14,9 @@ const app = new Application({
 	resizeTo: window
 });
 
-/*
-obj.beginFill(0x1100BB);
-buildshape2(obj,shape0,size0,shape1,size1,shape2,size2);
-
-obj.beginFill(0x66AA33);
-buildshape1(obj,shape0,size0,shape1,size1,0,0,0);
-obj.beginFill(0xff0000);
-buildshape0(obj,shape0,size0);
-
-
-let num1 = 0x224477;
-let num2 = 0x109923;
-
-console.log(num1.toString(16));
-console.log(num2.toString(16));
-
-
-console.log((((num1+num2)&0x1fefeff)/2).toString(16))
-//buildshape0(obj,shape1,size1);
-
-*/
-
-
 //get stage size
 const stage_width = window.innerWidth;
 const stage_height = window.innerHeight;
-
 
 
 //create cell from new class
@@ -52,10 +28,13 @@ let speed = 2;
 let heading = Math.PI*0.4; //RADIANS DO NOT FORGET
 
 //create cells
-let body = [7,60,0x116644,5,30,0x551100,2,20,0x11AA22,3,10,0x334400,3,10,0x330088];
+//let body = [7,60,0x116644,5,30,0x551100,2,20,0x11AA22,3,10,0x334400,3,10,0x330088,4,60,0x712624,3,30,0x3511c0,2,20,0x112222,3,10,0x834400];
+//hex or dec works, dec preferable for mysql
+let body = [4,40,16711680];
 let obj1 = new CellBasic(x,y,speed,heading, body, stage_width,stage_height);
 
-body = [4,60,0x712624,3,30,0x3511c0,2,20,0x112222,3,10,0x834400];
+//body = [4,60,0x712624,3,30,0x3511c0,2,20,0x112222,3,10,0x834400];
+body = [6,60,255];
 
 let obj2 = new CellBasic(100,500,7,Math.PI*1.6, body, stage_width,stage_height);
 
@@ -64,7 +43,7 @@ let objs:CellBasic[] = [obj1,obj2];
 
 //start connnection to db
 let db = new getData();
-let data = db.getRows(2);
+let data = db.getRows();
 
 
 //add cell to stage
@@ -101,8 +80,8 @@ function coitus(p1: CellBasic, p2: CellBasic){
 					bodynew[i] += 2*Math.floor((Math.random() * (13)-2)/9);
 					break;
 				case 2:
-					//parseInt('0xfae3', 16)  
-					bodynew[i] = (((body1[i]+body2[i])&0x1fefeff)/2)
+					//mix two colors 
+					bodynew[i] = (body1[i]&0x1fefeff)/2+(body2[i]&0x1fefeff)/2;
 			}
 			
 		}
@@ -152,15 +131,18 @@ function update() {
 		//let cleanData: MyRootObj = JSON.parse(data.toString());
 		//let colors:number = 0;
 
-		for(let i = 0; i < objs.length; i++){
-			data.then(response => objs[i].set_color(response[i].color ));
+		//for(let i = 0; i < objs.length; i++){
+		//	data.then(response => objs[i].set_color(response[i].color ));
 			//data.then(response => console.log(response[i].color ));
-		}
-		
-		
+		//}  JSON.parse(response[0].body).levels
+
+		//data.then(response => console.log(response[0].x_pos));
+		data.then(response => objs.push(new CellBasic(response[0].x_pos,response[0].y_pos,response[0].speed,response[0].dir, JSON.parse(response[0].body).levels, stage_width, stage_height)));
+		//console.log(data.);
+		db.stop();
 
 		//request new data
-		data = db.getRows(2);
+		//data = db.getRows();
 	}
 	
 
