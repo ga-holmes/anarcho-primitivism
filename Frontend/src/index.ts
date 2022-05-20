@@ -18,6 +18,18 @@ const app = new Application({
 const stage_width = window.innerWidth;
 const stage_height = window.innerHeight;
 
+//draw box for stage
+var box = new Graphics();
+app.stage.addChild(box);
+
+// draw line
+box.lineStyle(2, 0xff22ff);
+box.moveTo(1, 1);
+box.lineTo(1000, 1);
+box.lineTo(1000, 1000);
+box.lineTo(1, 1000);
+box.lineTo(1, 1);
+box.endFill();
 
 //create cell from new class
 
@@ -137,7 +149,9 @@ function update() {
 		//}  JSON.parse(response[0].body).levels
 
 		//data.then(response => console.log(response[0].x_pos));
-		data.then(response => objs.push(new CellBasic(response[0].x_pos,response[0].y_pos,response[0].speed,response[0].dir, JSON.parse(response[0].body).levels, stage_width, stage_height)));
+		for(let i = 0; i < objs.length; i++){
+			data.then(response => objs.push(new CellBasic(response[i].x_pos,response[i].y_pos,response[i].speed,response[i].dir, JSON.parse(response[i].body).levels, stage_width, stage_height)));
+		}
 		//console.log(data.);
 		db.stop();
 

@@ -9,12 +9,12 @@ app.use(cors());
 
 const pool = mysql.createPool({
 	
-	host:"IP",
-	port:3306,
-	user:"UN",
-	password:"PW",
-	database:"DB",
-	insecureAuth: true
+	host: "IP",
+    port: 3306,
+    user: "UN",
+    password: "PW",
+    database: "DB",
+    insecureAuth: true
 	
 });
 

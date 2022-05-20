@@ -22,15 +22,24 @@ export  default class CellBasic {
     #hitbox_range: number;
 
 	constructor(pos_x: number, pos_y: number, s: number, dir: number, body: any, max_width: number, max_height: number) {
-		this.#position_x = pos_x;
+		
+        
+        this.#position_x = pos_x;
 		this.#position_y = pos_y;
 		this.#speed = s;
 		this.#heading = dir;
         this.#body = body;
 
-
+        //width and height set for testing
+        /*
         this.stage_width = max_width;
         this.stage_height = max_height;
+        */
+        max_width;
+        max_height;
+        this.stage_width = 1000;
+        this.stage_height = 1000;
+
         this.#hitbox_range = 1;
 
         this.#graphic = new Graphics();

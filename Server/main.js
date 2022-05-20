@@ -36,12 +36,22 @@ con.connect(function(err) {
     ];
 
     //stmt = "DELETE FROM `all_cells` WHERE `cell_id` = 2";
+    /*
+        con.query(stmt, [todos], function(err, result) {
+            if (err) throw err;
+            console.log("1 record inserted");
+        });
 
-    con.query(stmt, [todos], function(err, result) {
-        if (err) throw err;
-        console.log("1 record inserted");
-    });
-
-
+    */
 
 });
+
+console.log("done setup, begin simulation");
+
+var myfunc = setInterval(function() {
+
+
+    console.log('Hello World at ' + 69 + ' seconds');
+    console.log("plus");
+
+}, 2000);
