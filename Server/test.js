@@ -23,6 +23,7 @@ con.connect(function(err) {
     });
 });
 
+//get data from db then add to cell class
 
 console.log("done setup, begin simulation");
 //canvas
@@ -32,7 +33,7 @@ let wifth = 1000;
 let st = Date.now();
 let end = false;
 let time;
-
+let updateDb = 0;
 
 var myfunc = setInterval(function() {
 
@@ -44,6 +45,34 @@ var myfunc = setInterval(function() {
     st = time;
     if (end) {
         clearInterval(myfunc);
+    }
+    
+    for(let i=0; i<length(cells); i++) {
+        cells[i].update();
+    }
+
+    updateDb++;  
+    if (updateDb >=100) {
+        updateDb = 0;
+        //update value for position in dbch
+        //delete everything
+        con.query("DELETE FROM all_cells LIMIT 10000", function(err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+        });
+
+        let stmt = 'REPLACE all_cells (cell_id, x_pos, y_pos, speed, dir, body)  VALUES ?  ';
+        let todos = [];
+
+        for(let i=0; i<length(cells); i++) {
+            todos.push(cells.get_dbval());
+        }
+
+        con.query(stmt, [todos], function(err, result) {
+            if (err) throw err;
+            console.log("1 record inserted");
+        });
+            
     }
 
 }, 2000); //for 20 fps use 40ms delay
@@ -81,7 +110,10 @@ class cell {
         this.check_border;
     }
 
-
+    get_dbval() {
+        //[id, x, y, speed, dir, JSON.stringify(body)]
+        return([this.id, this.x_pos, this.y_pos, this.speed, this.dir, JSON.stringify(this.body)]);
+    }
 
 
 
